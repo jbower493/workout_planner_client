@@ -1,10 +1,14 @@
+// auth
+export const REQUESTING_AUTH_DATA = 'REQUESTING_AUTH_DATA';
+export const RECEIVED_AUTH_DATA = 'RECEIVED_AUTH_DATA';
 export const GET_USER = 'GET_USER';
 export const LOGIN = 'LOGIN';
 export const REGISTER = 'REGISTER';
 export const LOGOUT = 'LOGOUT';
-export const REQUESTING_DATA = 'REQUESTING_DATA';
-export const RECEIVED_DATA = 'RECEIVED_DATA';
 export const SHOW_REGISTER = 'SHOW_REGISTER';
 export const SHOW_LOGIN = 'SHOW_LOGIN';
 
-//export const 
+// exercises
+export const REQUESTING_EXERCISES_DATA = 'REQUESTING_EXERCISES_DATA';
+export const RECEIVED_EXERCISES_DATA = 'RECEIVED_EXERCISES_DATA';
+export const GET_EXERCISES = 'GET_EXERCISES';

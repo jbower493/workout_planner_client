@@ -26,7 +26,7 @@ class Content extends React.Component {
       modal: false,
       page: 'workout list',
       workouts: [],
-      exercises: [],
+      //exercises: [],
       workoutToAddTo: null,
       workoutToView: null,
       exerciseToEdit: null,
@@ -64,26 +64,14 @@ class Content extends React.Component {
       url: `${url}/get-workouts`
     })
       .then(res => {
-        console.log(res.data)
-        this.setState({ workouts: res.data.workouts });
-
         if(workoutBeingViewedId) {
           const newWorkout = res.data.workouts.find(workout => workout._id === workoutBeingViewedId);
           this.setState({ workoutToView: newWorkout });
         }
-
-        Axios({
-          method: 'GET',
-          withCredentials: true,
-          url: `${url}/get-exercises`
-        })
-          .then(res => {
-            console.log(res.data)
-            this.setState({
-              exercises: res.data.exercises,
-              loading: false
-            });
-          })
+        this.setState({ 
+          workouts: res.data.workouts,
+          loading: false
+        });
       })
   }
 
@@ -240,6 +228,7 @@ class Content extends React.Component {
 
   togglePage() {
     this.state.page === 'workout list' ? this.setState({ page: 'exercise list' }) : this.setState({ page: 'workout list' });
+    console.log(this.state)
   }
 
   viewWorkout(workout) {
@@ -389,7 +378,7 @@ class Content extends React.Component {
           togglePage={this.togglePage}
           active={this.state.page} />
         <ExerciseList
-          exercises={this.state.exercises}
+          //exercises={this.state.exercises}
           showEditExercise={this.showEditExercise}
           showDeleteModal={this.showDeleteModal} />
       </div>;

@@ -1,4 +1,4 @@
-import { GET_USER, LOGIN, REGISTER, LOGOUT, REQUESTING_DATA, RECEIVED_DATA, SHOW_REGISTER, SHOW_LOGIN } from '../actions/types';
+import { GET_USER, LOGIN, REGISTER, LOGOUT, REQUESTING_AUTH_DATA, RECEIVED_AUTH_DATA, SHOW_REGISTER, SHOW_LOGIN } from '../actions/types';
 
 const initialState = {
   loading: false,
@@ -18,12 +18,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         form: 'login'
       };
-    case REQUESTING_DATA:
+    case REQUESTING_AUTH_DATA:
       return {
         ...state,
         loading: true
       };
-    case RECEIVED_DATA:
+    case RECEIVED_AUTH_DATA:
       return {
         ...state,
         loading: false
