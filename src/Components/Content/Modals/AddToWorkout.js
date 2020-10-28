@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { addToWorkout } from '../../../redux/actions/workoutsActions.js';
+import { closeModal } from '../../../redux/actions/displayActions.js';
+
 const AddToWorkout = (props) => {
   const [reps, setReps] = useState(10);
   const [sets, setSets] = useState(3);
@@ -15,7 +19,8 @@ const AddToWorkout = (props) => {
       sets,
       weight 
     };
-    props.addToWorkout(exercise);
+    const workoutId = 'need to get workout id from somewhere!!';
+    props.addToWorkout(exercise, workoutId);
   };
 
   let button;
@@ -76,4 +81,9 @@ const AddToWorkout = (props) => {
   )
 };
 
-export default AddToWorkout;
+const mapStateToProps = state => ({
+  loading: state.workouts.loading,
+  exercises: state.exercises.exercises
+});
+
+export default connect(mapStateToProps, { addToWorkout, closeModal })(AddToWorkout);

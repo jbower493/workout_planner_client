@@ -2,6 +2,10 @@ import React from 'react';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { newWorkout } from '../../../redux/actions/workoutsActions.js';
+import { closeModal } from '../../../redux/actions/displayActions.js';
+
 class NewWorkoutModal extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +33,7 @@ class NewWorkoutModal extends React.Component {
   }
 
   saveNewWorkout(e) {
-    this.props.saveNewWorkout(this.state.name, this.state.duration, this.state.type);
+    this.props.newWorkout(this.state.name, this.state.duration, this.state.type);
   }
 
   render() {
@@ -78,4 +82,8 @@ class NewWorkoutModal extends React.Component {
   }
 };
 
-export default NewWorkoutModal;
+const mapStateToProps = state => ({
+  loading: state.workouts.loading
+});
+
+export default connect(mapStateToProps, { newWorkout, closeModal })(NewWorkoutModal);

@@ -1,4 +1,4 @@
-import { REQUESTING_EXERCISES_DATA, RECEIVED_EXERCISES_DATA, GET_EXERCISES } from '../actions/types';
+import { REQUESTING_EXERCISES_DATA, RECEIVED_EXERCISES_DATA, GET_EXERCISES, NEW_EXERCISE, EDIT_EXERCISE, DELETE_EXERCISE } from '../actions/types';
 
 const initialState = {
   exercises: [],
@@ -22,6 +22,9 @@ const exercisesReducer = (state = initialState, action) => {
         ...state,
         exercises: action.payload
       };
+    case NEW_EXERCISE:
+    case EDIT_EXERCISE:
+    case DELETE_EXERCISE:
     default:
       return state;
   }

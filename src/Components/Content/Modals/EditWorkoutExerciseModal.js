@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { editWorkoutExercise } from "../../../redux/actions/workoutsActions.js";
+import { closeWorkoutDetailsModal } from '../../../redux/actions/displayActions.js';
+
 const EditWorkoutExerciseModal = (props) => {
   const [reps, setReps] = useState(props.workoutExerciseToEdit.workoutExercise.reps);
   const [sets, setSets] = useState(props.workoutExerciseToEdit.workoutExercise.sets);
   const [weight, setWeight] = useState(props.workoutExerciseToEdit.workoutExercise.weight);
 
   const editWorkoutExercise = e => {
-    props.editWorkoutExercise(reps, sets, weight);
+    // need to get last 2 arguments from somewhere!!
+    const workoutId = '';
+    const workoutExerciseId = '';
+    props.editWorkoutExercise(reps, sets, weight, workoutId, workoutExerciseId);
   };
 
   let button;
@@ -19,7 +26,7 @@ const EditWorkoutExerciseModal = (props) => {
   } else {
     button = <ModalFooter>
         <Button color="primary" onClick={editWorkoutExercise}>Save</Button>
-        <Button color="danger" onClick={props.closeModal}>Cancel</Button>
+        <Button color="danger" onClick={props.closeWorkoutDetailsModal}>Cancel</Button>
       </ModalFooter>;
   }
 
@@ -52,4 +59,8 @@ const EditWorkoutExerciseModal = (props) => {
   )
 };
 
-export default EditWorkoutExerciseModal;
+const mapStateToProps = state => ({
+  loading: state.workouts.loading
+});
+
+export default connect(mapStateToProps, { editWorkoutExercise, closeWorkoutDetailsModal })(EditWorkoutExerciseModal);

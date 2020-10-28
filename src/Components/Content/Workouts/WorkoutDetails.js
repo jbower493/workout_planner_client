@@ -6,14 +6,22 @@ import { Button, ListGroupItem, Card, CardTitle, CardText, CardSubtitle, CardBod
 
 import { MdWatchLater } from "react-icons/md";
 
+import { connect } from 'react-redux';
+import { showEditWorkout, showEditWorkoutExercise } from '../../../redux/actions/displayActions.js';
+
 class WorkoutDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.showEditWorkoutModal = this.showEditWorkoutModal.bind(this);
+    this.showEditWorkout = this.showEditWorkoutModal.bind(this);
+    this.showEditWorkoutExercise = this.showEditWorkoutExercise.bind(this);
   }
 
-  showEditWorkoutModal(e) {
-    this.props.showEditWorkoutModal(this.props.workout);
+  showEditWorkout(e) {
+    this.props.showEditWorkout(this.props.workout._id);
+  }
+
+  showEditWorkoutExercise(e) {
+    
   }
 
   render() {
@@ -27,7 +35,7 @@ class WorkoutDetails extends React.Component {
             <div>Type: <span className="text-primary">{this.props.workout.type}</span></div>
             <div className="d-flex align-items-center"><MdWatchLater className="mr-1" /> <span className="text-primary">{this.props.workout.duration} mins</span></div>
           </div>
-          <Button className="details-edit-button" color="primary" onClick={this.showEditWorkoutModal}>Edit</Button>
+          <Button className="details-edit-button" color="primary" onClick={this.showEditWorkout}>Edit</Button>
         </ListGroupItem>
         <div className="row row-cols-1 row-cols-md-3 mt-4">
         {
@@ -53,10 +61,12 @@ class WorkoutDetails extends React.Component {
                     <Button
                       className="float-right"
                       color="primary"
-                      onClick={() => this.props.showEditWorkoutExerciseModal({
-                        workoutId: this.props.workout._id,
-                        workoutExercise: exercise
-                      })}>Edit</Button>
+                      onClick={() => {
+                        this.props.showEditWorkoutExercise({
+                          workoutId: this.props.workout._id,
+                          workoutExerciseId: exercise._id
+                        })
+                      }}>Edit</Button>
                   </CardFooter>
                 </Card>
               </div>
@@ -69,4 +79,6 @@ class WorkoutDetails extends React.Component {
   }
 };
 
-export default WorkoutDetails;
+const mapStateToProps = state => {};
+
+export default connect(mapStateToProps, { showEditWorkout, showEditWorkoutExercise })(WorkoutDetails);

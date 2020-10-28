@@ -5,6 +5,9 @@ import { ListGroup, ListGroupItem, Collapse, Dropdown, DropdownToggle, DropdownM
 
 import { MdMoreHoriz, MdExpandMore } from "react-icons/md";
 
+import { connect } from 'react-redux';
+import { showDeleteModal, showAddToWorkout, viewWorkout } from '../../../redux/actions/displayActions.js';
+
 const Workout = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -14,7 +17,7 @@ const Workout = (props) => {
   const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
   const showAddToWorkout = e => {
-    props.showAddToWorkout(props.workout);
+    props.showAddToWorkout(props.workout._id);
   };
 
   const showDeleteModal = e => {
@@ -71,4 +74,6 @@ const Workout = (props) => {
   )
 };
 
-export default Workout;
+//const mapStateToProps = state => {};
+
+export default connect(null, { showDeleteModal, showAddToWorkout, viewWorkout })(Workout);

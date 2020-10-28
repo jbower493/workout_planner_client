@@ -2,6 +2,9 @@ import React from 'react';
 
 import { Button } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { backToDashboard } from '../../redux/actions/displayActions.js';
+
 const BackButton = (props) => {
   return (
     <div className="back-button-container">
@@ -10,4 +13,6 @@ const BackButton = (props) => {
   )
 };
 
-export default BackButton;
+const mapStateToProps = state => {};
+
+export default connect(mapStateToProps, { backToDashboard })(BackButton);

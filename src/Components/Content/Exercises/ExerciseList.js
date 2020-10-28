@@ -11,7 +11,6 @@ const ExerciseList = (props) => {
   const { getExercises } = props;
   useEffect(() => {
     getExercises();
-    console.log('use effect ran')
   }, [getExercises]);
 
   return (

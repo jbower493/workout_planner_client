@@ -2,6 +2,10 @@ import React from 'react';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { newExercise } from '../../../redux/actions/exercisesActions.js';
+import { closeModal } from '../../../redux/actions/displayActions.js';
+
 class NewExerciseModal extends React.Component {
   constructor(props) {
     super(props);
@@ -29,12 +33,12 @@ class NewExerciseModal extends React.Component {
   }
 
   saveNewExercise(e) {
-    this.props.saveNewExercise(this.state.name, this.state.description, this.state.muscleGroup);
+    this.props.newExercise(this.state.name, this.state.description, this.state.muscleGroup);
   }
 
   render() {
     let button;
-    if(this.props.fetching) {
+    if(this.props.loading) {
       button = <ModalFooter>
           <Spinner size="sm" color="secondary" />
         </ModalFooter>;
@@ -72,4 +76,8 @@ class NewExerciseModal extends React.Component {
   }
 };
 
-export default NewExerciseModal;
+const mapStateToProps = state => ({
+  loading: state.exercises.loading
+});
+
+export default connect(mapStateToProps, { newExercise, closeModal })(NewExerciseModal);

@@ -2,6 +2,11 @@ import React from 'react';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Spinner } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { deleteExercise } from '../../../redux/actions/exercisesActions.js';
+import { deleteWorkout } from '../../../redux/actions/workoutsActions.js';
+import { closeModal } from '../../../redux/actions/displayActions.js';
+
 const ConfirmDeleteModal = (props) => {
   let title;
   let message;
@@ -42,4 +47,9 @@ const ConfirmDeleteModal = (props) => {
   )
 };
 
-export default ConfirmDeleteModal;
+const mapStateToProps = state => ({
+  exercisesLoading: state.exercises.loading,
+  workoutsLoading: state.workouts.loading
+});
+
+export default connect(mapStateToProps, { deleteExercise, deleteWorkout, closeModal })(ConfirmDeleteModal);

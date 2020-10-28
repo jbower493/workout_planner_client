@@ -4,6 +4,9 @@ import { ListGroupItem, Collapse, Dropdown, DropdownToggle, DropdownMenu, Dropdo
 
 import { MdMoreHoriz, MdExpandMore } from "react-icons/md";
 
+import { connect } from 'react-redux';
+import { showDeleteModal, showEditExercise } from '../../../redux/actions/displayActions.js';
+
 const Exercise = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -13,11 +16,11 @@ const Exercise = (props) => {
   const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
   const showEditExercise = () => {
-    props.showEditExercise(props.exercise);
+    props.showEditExercise(props.exercise._id);
   };
 
   const showDeleteModal = e => {
-    props.showDeleteModal('exercise', props.exercise);
+    props.showDeleteModal('exercise', props.exercise._id);
   };
 
   return (
@@ -54,4 +57,6 @@ const Exercise = (props) => {
   )
 };
 
-export default Exercise;
+//const mapStateToProps = state => {};
+
+export default connect(null, { showDeleteModal, showEditExercise })(Exercise);
