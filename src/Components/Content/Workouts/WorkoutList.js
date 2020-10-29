@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { getWorkouts } from '../../../redux/actions/workoutsActions.js';
 
 class WorkoutList extends React.Component {
-  componentDidMount() {
+  /*componentDidMount() {
     this.props.getWorkouts();
-  }
+  }*/
 
   render() {
     return (

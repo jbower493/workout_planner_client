@@ -16,10 +16,16 @@ import ExerciseList from './Exercises/ExerciseList';
 //import { Spinner } from 'reactstrap';
 
 import { connect } from 'react-redux';
+import { getExercises } from '../../redux/actions/exercisesActions.js';
+import { getWorkouts } from '../../redux/actions/workoutsActions.js';
 
 //import { url } from '../../App';
 
 class Content extends React.Component {
+  componentDidMount() {
+    this.props.getExercises();
+    this.props.getWorkouts();
+  }
 /*
   resetState(workoutBeingViewedId) {
     Axios({
@@ -355,4 +361,4 @@ const mapStateToProps = state => ({
   modal: state.display.modal
 });
 
-export default connect(mapStateToProps, {})(Content);
+export default connect(mapStateToProps, { getExercises, getWorkouts })(Content);

@@ -110,7 +110,6 @@ export const editExercise = (id, name, description, muscleGroup) => {
 export const deleteExercise = (id) => {
   return dispatch => {
     dispatch(requestingExercisesDataAC());
-    this.setState({ fetching: true });
     Axios({
       method: 'DELETE',
       url: `${url}/exercise/${id}`,

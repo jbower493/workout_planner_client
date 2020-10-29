@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React/*, { useEffect }*/ from 'react';
 
 import Exercise from './Exercise';
 
@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import { getExercises } from '../../../redux/actions/exercisesActions.js';
 
 const ExerciseList = (props) => {
-  const { getExercises } = props;
+  /*const { getExercises } = props;
   useEffect(() => {
     getExercises();
-  }, [getExercises]);
+  }, [getExercises]);*/
 
   return (
     <ListGroup>
