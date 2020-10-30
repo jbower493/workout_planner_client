@@ -2,7 +2,7 @@ import { REQUESTING_EXERCISES_DATA, RECEIVED_EXERCISES_DATA, GET_EXERCISES, NEW_
 
 const initialState = {
   exercises: [],
-  loading: false
+  loading: true
 };
 
 const exercisesReducer = (state = initialState, action) => {

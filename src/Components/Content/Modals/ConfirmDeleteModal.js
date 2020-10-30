@@ -23,7 +23,7 @@ const ConfirmDeleteModal = (props) => {
   }
 
   let button;
-  if(props.fetching) {
+  if(props.exercisesLoading || props.workoutsLoading) {
     button = <ModalFooter>
         <Spinner size="sm" color="secondary" />
       </ModalFooter>;

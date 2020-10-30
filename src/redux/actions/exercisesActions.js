@@ -3,6 +3,8 @@ import Axios from 'axios';
 
 import { url } from '../../App';
 
+import { closeModal } from './displayActions.js';
+
 const requestingExercisesDataAC = () => {
   return { type: REQUESTING_EXERCISES_DATA }
 };
@@ -39,7 +41,9 @@ export const getExercises = () => {
       url: `${url}/get-exercises`
     })
       .then(res => {
-        dispatch(getExercisesAC(res.data.exercises));
+        if(res.data.success) {
+          dispatch(getExercisesAC(res.data.exercises));
+        }
         dispatch(receivedExercisesDataAC());
       })
       .catch(e => {
@@ -65,11 +69,11 @@ export const newExercise = (name, description, muscleGroup) => {
     })
       .then(res => {
         if(res.data.success) {
-          //this.setState({ modal: false });
-          //this.resetState()
           dispatch(newExerciseAC());
+          dispatch(getExercisesAC(res.data.exercises));
         }
         dispatch(receivedExercisesDataAC());
+        closeModal();
       })
       .catch(e => {
         console.log(e);
@@ -92,13 +96,12 @@ export const editExercise = (id, name, description, muscleGroup) => {
       }
     })
       .then(res => {
-        /*this.setState({
-          modal: false,
-          exerciseToEdit: null
-        });
-        this.resetState();*/
-        dispatch(editExerciseAC());
+        if(res.data.success) {
+          dispatch(editExerciseAC());
+          dispatch(getExercisesAC(res.data.exercises));
+        }
         dispatch(receivedExercisesDataAC());
+        closeModal();
       })
       .catch(e => {
         console.log(e);
@@ -117,14 +120,11 @@ export const deleteExercise = (id) => {
     })
       .then(res => {
         if(res.data.success) {
-          /*this.setState({
-            modal: false,
-            workoutToDelete: null
-          });
-          this.resetState();*/
           dispatch(deleteExerciseAC());
+          dispatch(getExercisesAC(res.data.exercises));
         }
         dispatch(receivedExercisesDataAC());
+        closeModal();
       })
       .catch(e => {
         console.log(e);

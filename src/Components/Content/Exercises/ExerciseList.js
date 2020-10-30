@@ -1,18 +1,12 @@
-import React/*, { useEffect }*/ from 'react';
+import React from 'react';
 
 import Exercise from './Exercise';
 
 import { ListGroup } from 'reactstrap';
 
 import { connect } from 'react-redux';
-import { getExercises } from '../../../redux/actions/exercisesActions.js';
 
 const ExerciseList = (props) => {
-  /*const { getExercises } = props;
-  useEffect(() => {
-    getExercises();
-  }, [getExercises]);*/
-
   return (
     <ListGroup>
       {props.exercises.map(ex => <Exercise
@@ -29,4 +23,4 @@ const mapStateToProps = state => ({
   loading: state.exercises.loading
 });
 
-export default connect(mapStateToProps, { getExercises })(ExerciseList);
+export default connect(mapStateToProps, null)(ExerciseList);

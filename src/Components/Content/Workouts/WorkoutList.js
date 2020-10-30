@@ -1,20 +1,20 @@
 import React from 'react';
 import Workout from './Workout';
 
+import { Spinner } from 'reactstrap';
+
 import { connect } from 'react-redux';
-import { getWorkouts } from '../../../redux/actions/workoutsActions.js';
 
 class WorkoutList extends React.Component {
-  /*componentDidMount() {
-    this.props.getWorkouts();
-  }*/
-
   render() {
     return (
       <div>
-        {this.props.workouts.map(workout => <Workout
-          key={this.props.workouts.indexOf(workout)}
-          workout={workout} />)
+        {
+          this.props.loading
+            ? <div className="loading"><Spinner size="md" color="secondary" /></div>
+            : this.props.workouts.map(workout => <Workout
+              key={this.props.workouts.indexOf(workout)}
+              workout={workout} />)
         }
       </div>
     )
@@ -26,4 +26,4 @@ const mapStateToProps = state => ({
   loading: state.workouts.loading
 });
 
-export default connect(mapStateToProps, { getWorkouts })(WorkoutList);
+export default connect(mapStateToProps, null)(WorkoutList);
