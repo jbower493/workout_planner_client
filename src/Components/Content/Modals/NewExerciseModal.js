@@ -76,8 +76,4 @@ class NewExerciseModal extends React.Component {
   }
 };
 
-const mapStateToProps = state => ({
-  loading: state.exercises.loading
-});
-
-export default connect(mapStateToProps, { newExercise, closeModal })(NewExerciseModal);
+export default connect(null, { newExercise, closeModal })(NewExerciseModal);

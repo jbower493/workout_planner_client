@@ -12,14 +12,14 @@ const ConfirmDeleteModal = (props) => {
   let message;
   let proceedFunc;
 
-  if(props.exerciseToDelete === null) {
+  if(props.deletableExerciseId === null) {
     title = 'Delete Workout';
     message = 'Are you sure you want to delete this workout? This action cannot be undone.';
-    proceedFunc = props.deleteWorkout;
+    proceedFunc = () => props.deleteWorkout(props.deletableWorkoutId);
   } else {
     title = 'Delete Exercise';
     message = 'Are you sure you want to delete this exercise? This will also remove the exercise from any workout that you have added it to, and cannot be undone.';
-    proceedFunc = props.deleteExercise;
+    proceedFunc = () => props.deleteExercise(props.deletableExerciseId);
   }
 
   let button;
@@ -49,7 +49,9 @@ const ConfirmDeleteModal = (props) => {
 
 const mapStateToProps = state => ({
   exercisesLoading: state.exercises.loading,
-  workoutsLoading: state.workouts.loading
+  workoutsLoading: state.workouts.loading,
+  deletableExerciseId: state.details.deletableExerciseId,
+  deletableWorkoutId: state.details.deletableWorkoutId
 });
 
 export default connect(mapStateToProps, { deleteExercise, deleteWorkout, closeModal })(ConfirmDeleteModal);

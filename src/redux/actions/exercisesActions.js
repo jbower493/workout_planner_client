@@ -1,17 +1,9 @@
-import { REQUESTING_EXERCISES_DATA, RECEIVED_EXERCISES_DATA, GET_EXERCISES, NEW_EXERCISE, EDIT_EXERCISE, DELETE_EXERCISE } from './types';
+import { GET_EXERCISES, NEW_EXERCISE, EDIT_EXERCISE, DELETE_EXERCISE } from './types';
 import Axios from 'axios';
 
 import { url } from '../../App';
 
-import { closeModal } from './displayActions.js';
-
-const requestingExercisesDataAC = () => {
-  return { type: REQUESTING_EXERCISES_DATA }
-};
-
-const receivedExercisesDataAC = () => {
-  return { type: RECEIVED_EXERCISES_DATA }
-};
+import { hideModalAC } from './displayActions.js';
 
 const getExercisesAC = (exercises) => {
   return {
@@ -20,21 +12,30 @@ const getExercisesAC = (exercises) => {
   }
 };
 
-const newExerciseAC = () => {
-  return { type: NEW_EXERCISE }
+const newExerciseAC = (exercises) => {
+  return {
+    type: NEW_EXERCISE,
+    payload: exercises
+  }
 };
 
-const editExerciseAC = () => {
-  return { type: EDIT_EXERCISE }
+const editExerciseAC = (exercises) => {
+  return {
+    type: EDIT_EXERCISE,
+    payload: exercises
+  }
 };
 
-const deleteExerciseAC = () => {
-  return { type: DELETE_EXERCISE }
+const deleteExerciseAC = (exercises) => {
+  return {
+    type: DELETE_EXERCISE,
+    payload: exercises
+  }
 };
 
 export const getExercises = () => {
   return (dispatch) => {
-    dispatch(requestingExercisesDataAC());
+    
     Axios({
       method: 'GET',
       withCredentials: true,
@@ -42,21 +43,23 @@ export const getExercises = () => {
     })
       .then(res => {
         if(res.data.success) {
-          dispatch(getExercisesAC(res.data.exercises));
+          const newExercises = [...res.data.exercises];
+          dispatch(getExercisesAC(newExercises));
+          
         }
-        dispatch(receivedExercisesDataAC());
+        
       })
       .catch(e => {
         console.log(e);
         dispatch(getExercisesAC([]));
-        dispatch(receivedExercisesDataAC());
+        
       })
   };
 };
 
 export const newExercise = (name, description, muscleGroup) => {
   return (dispatch) => {
-    dispatch(requestingExercisesDataAC());
+    
     Axios({
       method: 'POST',
       url: `${url}/new-exercise`,
@@ -69,22 +72,23 @@ export const newExercise = (name, description, muscleGroup) => {
     })
       .then(res => {
         if(res.data.success) {
-          dispatch(newExerciseAC());
-          dispatch(getExercisesAC(res.data.exercises));
+          
+          const newExercises = [...res.data.exercises];
+          dispatch(newExerciseAC(newExercises));
+          dispatch(hideModalAC())
         }
-        dispatch(receivedExercisesDataAC());
-        closeModal();
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedExercisesDataAC());
+        
       })
   };
 };
 
 export const editExercise = (id, name, description, muscleGroup) => {
   return dispatch => {
-    dispatch(requestingExercisesDataAC());
+    
     Axios({
       method: 'POST',
       url: `${url}/edit-exercise/${id}`,
@@ -97,22 +101,22 @@ export const editExercise = (id, name, description, muscleGroup) => {
     })
       .then(res => {
         if(res.data.success) {
-          dispatch(editExerciseAC());
-          dispatch(getExercisesAC(res.data.exercises));
+          const newExercises = [...res.data.exercises];
+          dispatch(editExerciseAC(newExercises));
+          dispatch(hideModalAC())
         }
-        dispatch(receivedExercisesDataAC());
-        closeModal();
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedExercisesDataAC());
+        
       })
   };
 };
 
 export const deleteExercise = (id) => {
   return dispatch => {
-    dispatch(requestingExercisesDataAC());
+    
     Axios({
       method: 'DELETE',
       url: `${url}/exercise/${id}`,
@@ -120,15 +124,15 @@ export const deleteExercise = (id) => {
     })
       .then(res => {
         if(res.data.success) {
-          dispatch(deleteExerciseAC());
-          dispatch(getExercisesAC(res.data.exercises));
+          const newExercises = [...res.data.exercises];
+          dispatch(deleteExerciseAC(newExercises));
+          dispatch(hideModalAC())
         }
-        dispatch(receivedExercisesDataAC());
-        closeModal();
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedExercisesDataAC());
+        
       })
   };
 };

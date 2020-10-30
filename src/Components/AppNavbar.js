@@ -42,7 +42,7 @@ const AppNavbar = (props) => {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    loading: state.auth.loading
+    //loading: state.auth.loading
   }
 };
 

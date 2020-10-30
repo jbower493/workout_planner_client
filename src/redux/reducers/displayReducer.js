@@ -1,4 +1,4 @@
-import { HIDE_MODAL, SHOW_MODAL_NEW, SHOW_DELETE_MODAL, SHOW_ADD_TO_WORKOUT, SHOW_EDIT_WORKOUT, SHOW_EDIT_WORKOUT_EXERCISE, SHOW_EDIT_EXERCISE, VIEW_WORKOUT, BACK_TO_DASHBOARD, DISPLAY_WORKOUTS, DISPLAY_EXERCISES, CLOSE_MODAL } from '../actions/types.js';
+import { SHOW_MODAL_NEW, SHOW_DELETE_MODAL, SHOW_ADD_TO_WORKOUT, SHOW_EDIT_WORKOUT, SHOW_EDIT_WORKOUT_EXERCISE, SHOW_EDIT_EXERCISE, VIEW_WORKOUT, BACK_TO_DASHBOARD, DISPLAY_WORKOUTS, DISPLAY_EXERCISES, HIDE_MODAL } from '../actions/types.js';
 
 const initialState = {
   modal: false,
@@ -7,11 +7,6 @@ const initialState = {
 
 const displayReducer = (state = initialState, action) => {
   switch(action.type) {
-    case HIDE_MODAL:
-      return {
-        ...state,
-        modal: false
-      };
     case SHOW_MODAL_NEW:
       return {
         ...state,
@@ -62,7 +57,7 @@ const displayReducer = (state = initialState, action) => {
         ...state,
         view: 'exercises'
       };
-    case CLOSE_MODAL:
+    case HIDE_MODAL:
       return {
         ...state,
         modal: false

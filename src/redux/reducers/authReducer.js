@@ -1,7 +1,6 @@
-import { GET_USER, LOGIN, REGISTER, LOGOUT, REQUESTING_AUTH_DATA, RECEIVED_AUTH_DATA, SHOW_REGISTER, SHOW_LOGIN } from '../actions/types';
+import { GET_USER, LOGIN, REGISTER, LOGOUT, /*REQUESTING_AUTH_DATA, RECEIVED_AUTH_DATA,*/ SHOW_REGISTER, SHOW_LOGIN } from '../actions/types';
 
 const initialState = {
-  loading: false,
   user: null,
   form: 'login'
 };
@@ -18,17 +17,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         form: 'login'
       };
-    case REQUESTING_AUTH_DATA:
-      return {
-        ...state,
-        loading: true
-      };
-    case RECEIVED_AUTH_DATA:
-      return {
-        ...state,
-        loading: false
-      };
     case LOGIN:
+      return {
+        ...state,
+        user: action.payload
+      }
     case GET_USER:
       return {
         ...state,
@@ -40,6 +33,10 @@ const authReducer = (state = initialState, action) => {
         user: null
       };
     case REGISTER:
+      return {
+        ...state,
+        form: 'login'
+      };
     default:
       return state;
   }

@@ -1,8 +1,8 @@
-import { HIDE_MODAL, SHOW_MODAL_NEW, SHOW_DELETE_MODAL, SHOW_ADD_TO_WORKOUT, SHOW_EDIT_WORKOUT, SHOW_EDIT_WORKOUT_EXERCISE, SHOW_EDIT_EXERCISE, VIEW_WORKOUT, BACK_TO_DASHBOARD, DISPLAY_EXERCISES, DISPLAY_WORKOUTS, CLOSE_MODAL } from './types';
+import { HIDE_MODAL, SHOW_MODAL_NEW, SHOW_DELETE_MODAL, SHOW_ADD_TO_WORKOUT, SHOW_EDIT_WORKOUT, SHOW_EDIT_WORKOUT_EXERCISE, SHOW_EDIT_EXERCISE, VIEW_WORKOUT, BACK_TO_DASHBOARD, DISPLAY_EXERCISES, DISPLAY_WORKOUTS } from './types';
 
-import { setDeletableExerciseAC, setDeletableWorkoutAC, setWorkoutToAddToAC, setWorkoutToEditAC, setWorkoutExerciseToEditAC, setExerciseToEditAC, setWorkoutToViewAC, resetWorkoutToViewAC, resetAllDetailsAC, resetWorkoutDetailDetailsAC } from './detailsActions.js';
+import { setDeletableExerciseAC, setDeletableWorkoutAC, setWorkoutToAddToAC, setWorkoutToEditAC, setWorkoutExerciseToEditAC, setExerciseToEditAC, setWorkoutToViewAC, resetWorkoutToViewAC, resetAllDetailsAC, resetWorkoutExerciseToEditAC } from './detailsActions.js';
 
-const hideModalAC = () => {
+export const hideModalAC = () => {
   return { type: HIDE_MODAL }
 };
 
@@ -49,10 +49,6 @@ const displayExercisesAC = () => {
   return { type: DISPLAY_EXERCISES }
 };
 
-const closeModalAC = () => {
-  return { type: CLOSE_MODAL }
-};
-
 
 export const hideModalNew = () => {
   return dispatch => {
@@ -84,16 +80,16 @@ export const showAddToWorkout = (workoutId) => {
   };
 };
 
-export const showEditWorkout = (workoutId) => {
+export const showEditWorkout = (workout) => {
   return dispatch => {
-    dispatch(setWorkoutToEditAC(workoutId));
+    dispatch(setWorkoutToEditAC(workout));
     dispatch(showEditWorkoutAC());
   }
 };
 
 export const showEditWorkoutExercise = (workoutExercise) => {
   return dispatch => {
-    dispatch(setWorkoutExerciseToEditAC(workoutExercise));// needs to have workoutId and workoutExerciseId
+    dispatch(setWorkoutExerciseToEditAC(workoutExercise));// needs to have all properties
     dispatch(showEditWorkoutExerciseAC());
   };
 };
@@ -133,14 +129,21 @@ export const displayExercises = () => {
 
 export const closeModal = () => {
   return dispatch => {
-    dispatch(closeModalAC());
+    dispatch(hideModalAC());
     dispatch(resetAllDetailsAC());
   };
 };
 
-export const closeWorkoutDetailsModal = () => {
+export const closeEditWorkoutModal = () => {
   return dispatch => {
-    dispatch(closeModalAC());
-    dispatch(resetWorkoutDetailDetailsAC());
+    dispatch(hideModalAC());
+    
   };
 };
+
+export const closeEditWorkoutExerciseModal = () => {
+  return dispatch => {
+    dispatch(hideModalAC());
+    dispatch(resetWorkoutExerciseToEditAC());
+  }
+};  

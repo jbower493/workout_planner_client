@@ -4,17 +4,17 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, La
 
 import { connect } from 'react-redux';
 import { editWorkoutExercise } from "../../../redux/actions/workoutsActions.js";
-import { closeWorkoutDetailsModal } from '../../../redux/actions/displayActions.js';
+import { closeEditWorkoutExerciseModal } from '../../../redux/actions/displayActions.js';
 
 const EditWorkoutExerciseModal = (props) => {
-  const [reps, setReps] = useState(props.workoutExerciseToEdit.workoutExercise.reps);
-  const [sets, setSets] = useState(props.workoutExerciseToEdit.workoutExercise.sets);
-  const [weight, setWeight] = useState(props.workoutExerciseToEdit.workoutExercise.weight);
+  const [reps, setReps] = useState(props.workoutExerciseToEdit.reps);
+  const [sets, setSets] = useState(props.workoutExerciseToEdit.sets);
+  const [weight, setWeight] = useState(props.workoutExerciseToEdit.weight);
 
   const editWorkoutExercise = e => {
     // need to get last 2 arguments from somewhere!!
-    const workoutId = '';
-    const workoutExerciseId = '';
+    const workoutId = props.workoutExerciseToEdit.workoutId;
+    const workoutExerciseId = props.workoutExerciseToEdit._id;
     props.editWorkoutExercise(reps, sets, weight, workoutId, workoutExerciseId);
   };
 
@@ -26,7 +26,7 @@ const EditWorkoutExerciseModal = (props) => {
   } else {
     button = <ModalFooter>
         <Button color="primary" onClick={editWorkoutExercise}>Save</Button>
-        <Button color="danger" onClick={props.closeWorkoutDetailsModal}>Cancel</Button>
+        <Button color="danger" onClick={props.closeEditWorkoutExerciseModal}>Cancel</Button>
       </ModalFooter>;
   }
 
@@ -35,7 +35,7 @@ const EditWorkoutExerciseModal = (props) => {
       <Modal isOpen={true}>
         <ModalHeader>
           Edit Details for:<br/>
-          <span className="text-primary">{props.workoutExerciseToEdit.workoutExercise.exercise.name}</span>
+          <span className="text-primary">{props.workoutExerciseToEdit.exercise.name}</span>
         </ModalHeader>
         <ModalBody>
           <Form>
@@ -60,7 +60,7 @@ const EditWorkoutExerciseModal = (props) => {
 };
 
 const mapStateToProps = state => ({
-  loading: state.workouts.loading
+  workoutExerciseToEdit: state.details.workoutExerciseToEdit
 });
 
-export default connect(mapStateToProps, { editWorkoutExercise, closeWorkoutDetailsModal })(EditWorkoutExerciseModal);
+export default connect(mapStateToProps, { editWorkoutExercise, closeEditWorkoutExerciseModal })(EditWorkoutExerciseModal);

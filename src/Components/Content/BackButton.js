@@ -13,6 +13,4 @@ const BackButton = (props) => {
   )
 };
 
-const mapStateToProps = state => {};
-
-export default connect(mapStateToProps, { backToDashboard })(BackButton);
+export default connect(null, { backToDashboard })(BackButton);

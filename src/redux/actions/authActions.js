@@ -1,15 +1,15 @@
-import { GET_USER, LOGIN, REGISTER, LOGOUT, REQUESTING_AUTH_DATA, RECEIVED_AUTH_DATA, SHOW_REGISTER, SHOW_LOGIN } from './types';
+import { GET_USER, LOGIN, REGISTER, LOGOUT, /*REQUESTING_AUTH_DATA, RECEIVED_AUTH_DATA,*/ SHOW_REGISTER, SHOW_LOGIN } from './types';
 import Axios from 'axios';
 
 import { url } from '../../App';
-
+/*
 const requestingAuthDataAC = () => {
   return { type: REQUESTING_AUTH_DATA }
 };
 
 const receivedAuthDataAC = () => {
   return { type: RECEIVED_AUTH_DATA }
-};
+};*/
 
 const showRegisterAC = () => {
   return { type: SHOW_REGISTER }
@@ -59,27 +59,29 @@ export const showLogin = () => {
 
 export const getUser = () => {
   return (dispatch) => {
-    dispatch(requestingAuthDataAC());
+    
     Axios({
       method: 'GET',
       withCredentials: true,
       url: `${url}/get-user`
     })
       .then(res => {
-        dispatch(getUserAC(res.data.user));
-        dispatch(receivedAuthDataAC());
+        if(res.data.success) {
+          dispatch(getUserAC(res.data.user));
+        }
+        
       })
       .catch(e => {
         console.log(e);
         dispatch(getUserAC(undefined));
-        dispatch(receivedAuthDataAC());
+        
       })
   };
 };
 
 export const login = (credentials) => {
   return dispatch => {
-    dispatch(requestingAuthDataAC());
+    
     Axios({
       method: 'post',
       url: `${url}/login`,
@@ -88,20 +90,22 @@ export const login = (credentials) => {
       headers: {'Content-Type': 'application/json' }
       })
       .then(res => {
-        dispatch(loginAC(res.data.user));
-        dispatch(receivedAuthDataAC());
+        if(res.data.success) {
+          dispatch(loginAC(res.data.user));
+        }
+        
       })
       .catch(e => {
         console.log(e);
         dispatch(loginAC(undefined));
-        dispatch(receivedAuthDataAC());
+        
       })
   }
 };
 
 export const register = (credentials) => {
   return dispatch => {
-    dispatch(requestingAuthDataAC());
+    
     Axios({
       method: 'post',
       url: `${url}/register`,
@@ -110,36 +114,35 @@ export const register = (credentials) => {
       headers: {'Content-Type': 'application/json' }
       })
       .then(res => {
-        if(res.data.message === 'New user created') {
+        if(res.data.success) {
           dispatch(registerAC());
-          dispatch(showLoginAC());
         }
-        dispatch(receivedAuthDataAC());
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedAuthDataAC());
+        
       })
   }
 };
 
 export const logout = () => {
   return dispatch => {
-    dispatch(requestingAuthDataAC());
+    
     Axios({
       method: 'GET',
       withCredentials: true,
       url: `${url}/logout`
     })
       .then(res => {
-        if(res.data.message === 'Successfully logged out') {
+        if(res.data.success) {
           dispatch(logoutAC());
         }
-        dispatch(receivedAuthDataAC());
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedAuthDataAC());
+        
       })
   }
 };

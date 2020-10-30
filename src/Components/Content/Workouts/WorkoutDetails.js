@@ -12,22 +12,17 @@ import { showEditWorkout, showEditWorkoutExercise } from '../../../redux/actions
 class WorkoutDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.showEditWorkout = this.showEditWorkoutModal.bind(this);
-    this.showEditWorkoutExercise = this.showEditWorkoutExercise.bind(this);
+    this.showEditWorkout = this.showEditWorkout.bind(this);
   }
 
   showEditWorkout(e) {
-    this.props.showEditWorkout(this.props.workout._id);
-  }
-
-  showEditWorkoutExercise(e) {
-    
+    this.props.showEditWorkout(this.props.workout);
   }
 
   render() {
     return (
       <div>
-        <BackButton backToDashboard={this.props.backToDashboard} />
+        <BackButton />
         
         <ListGroupItem className="bg-light d-flex justify-content-between">
           <div>
@@ -41,7 +36,7 @@ class WorkoutDetails extends React.Component {
         {
           this.props.workout.exercises.map(exercise => {
             return (
-              <div className="col mb-4">
+              <div className="col mb-4" key={exercise._id}>
                 <Card className="card h-100">
                   <CardHeader>
                     <CardTitle className="d-flex justify-content-between">
@@ -63,8 +58,8 @@ class WorkoutDetails extends React.Component {
                       color="primary"
                       onClick={() => {
                         this.props.showEditWorkoutExercise({
-                          workoutId: this.props.workout._id,
-                          workoutExerciseId: exercise._id
+                          ...exercise,
+                          workoutId: this.props.workout._id
                         })
                       }}>Edit</Button>
                   </CardFooter>
@@ -79,6 +74,8 @@ class WorkoutDetails extends React.Component {
   }
 };
 
-const mapStateToProps = state => {};
+const mapStateToProps = state => ({
+  workout: state.details.workoutToView
+});
 
 export default connect(mapStateToProps, { showEditWorkout, showEditWorkoutExercise })(WorkoutDetails);

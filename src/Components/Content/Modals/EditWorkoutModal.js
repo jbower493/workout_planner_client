@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, La
 
 import { connect } from 'react-redux';
 import { editWorkout } from '../../../redux/actions/workoutsActions.js';
-import { closeWorkoutDetailsModal } from '../../../redux/actions/displayActions.js';
+import { closeEditWorkoutModal } from '../../../redux/actions/displayActions.js';
 
 const EditWorkoutModal = (props) => {
   const [name, setName] = useState(props.workoutToEdit.name);
@@ -12,7 +12,7 @@ const EditWorkoutModal = (props) => {
   const [type, setType] = useState(props.workoutToEdit.type);
 
   const editWorkout = e => {
-    const id = 'need to get the id from somewhere!!'
+    const id = props.workoutToEdit._id
     props.editWorkout(id, name, duration, type);
   };
 
@@ -24,7 +24,7 @@ const EditWorkoutModal = (props) => {
   } else {
     button = <ModalFooter>
         <Button color="primary" onClick={editWorkout}>Save</Button>
-        <Button color="danger" onClick={props.closeWorkoutDetailsModal}>Cancel</Button>
+        <Button color="danger" onClick={props.closeEditWorkoutModal}>Cancel</Button>
       </ModalFooter>;
   }
 
@@ -61,7 +61,7 @@ const EditWorkoutModal = (props) => {
 };
 
 const mapStateToProps = state => ({
-  loading: state.workouts.loading
+  workoutToEdit: state.details.workoutToEdit
 });
 
-export default connect(mapStateToProps, { editWorkout, closeWorkoutDetailsModal })(EditWorkoutModal);
+export default connect(mapStateToProps, { editWorkout, closeEditWorkoutModal })(EditWorkoutModal);

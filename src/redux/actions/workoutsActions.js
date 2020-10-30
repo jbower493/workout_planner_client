@@ -1,15 +1,10 @@
-import { REQUESTING_WORKOUTS_DATA, RECEIVED_WORKOUTS_DATA, GET_WORKOUTS, NEW_WORKOUT, EDIT_WORKOUT, DELETE_WORKOUT, ADD_TO_WORKOUT, EDIT_WORKOUT_EXERCISE, REMOVE_WORKOUT_EXERCISE } from './types.js';
+import { GET_WORKOUTS, NEW_WORKOUT, EDIT_WORKOUT, DELETE_WORKOUT, ADD_TO_WORKOUT, EDIT_WORKOUT_EXERCISE, REMOVE_WORKOUT_EXERCISE } from './types.js';
+
+import { hideModalAC } from './displayActions';
+import { setWorkoutToViewAC } from './detailsActions';
 
 import Axios from 'axios';
 import { url } from '../../App.js';
-
-const requestingWorkoutsDataAC = () => {
-  return { type: REQUESTING_WORKOUTS_DATA }
-};
-
-const receivedWorkoutsDataAC = () => {
-  return { type: RECEIVED_WORKOUTS_DATA }
-};
 
 const getWorkoutsAC = (workouts) => {
   return {
@@ -18,54 +13,76 @@ const getWorkoutsAC = (workouts) => {
   }
 };
 
-const newWorkoutAC = () => {
-  return { type: NEW_WORKOUT }
+const newWorkoutAC = (workouts) => {
+  return {
+    type: NEW_WORKOUT,
+    payload: workouts
+  }
 };
 
-const editWorkoutAC = () => {
-  return { type: EDIT_WORKOUT }
+const editWorkoutAC = (workouts) => {
+  return {
+    type: EDIT_WORKOUT,
+    payload: workouts
+  }
 };
 
-const deleteWorkoutAC = () => {
-  return { type: DELETE_WORKOUT }
+const deleteWorkoutAC = (workouts) => {
+  return {
+    type: DELETE_WORKOUT,
+    payload: workouts
+  }
 };
 
-const addToWorkoutAC = () => {
-  return { type: ADD_TO_WORKOUT }
+const addToWorkoutAC = (workouts) => {
+  return {
+    type: ADD_TO_WORKOUT,
+    payload: workouts
+  }
 };
 
-const editWorkoutExerciseAC = () => {
-  return { type: EDIT_WORKOUT_EXERCISE }
+const editWorkoutExerciseAC = (workouts) => {
+  return {
+    type: EDIT_WORKOUT_EXERCISE,
+    payload: workouts
+  }
 };
 
-const removeWorkoutExerciseAC = () => {
-  return { type: REMOVE_WORKOUT_EXERCISE }
+const removeWorkoutExerciseAC = (workouts) => {
+  return {
+    type: REMOVE_WORKOUT_EXERCISE,
+    payload: workouts
+  }
 };
 
 
 export const getWorkouts = () => {
   return dispatch => {
-    dispatch(requestingWorkoutsDataAC());
+    
     Axios({
       method: 'GET',
       withCredentials: true,
       url: `${url}/get-workouts`
     })
       .then(res => {
-        dispatch(getWorkoutsAC(res.data.workouts));
-        dispatch(receivedWorkoutsDataAC());
+        if(res.data.success) {
+          const newWorkouts = [...res.data.workouts];
+          dispatch(getWorkoutsAC(newWorkouts));
+          
+        }
+        
       })
       .catch(e => {
         console.log(e);
         dispatch(getWorkoutsAC([]));
-        dispatch(receivedWorkoutsDataAC());
+        
       })
   };
 };
 
 export const newWorkout = (name, duration, type) => {
   return dispatch => {
-    dispatch(requestingWorkoutsDataAC());
+    
     Axios({
       method: 'POST',
       url: `${url}/new-workout`,
@@ -78,22 +95,22 @@ export const newWorkout = (name, duration, type) => {
     })
       .then(res => {
         if(res.data.success) {
-          //this.setState({ modal: false });
-          dispatch(newWorkoutAC());
+          const newWorkouts = [...res.data.workouts];
+          dispatch(newWorkoutAC(newWorkouts));
+          dispatch(hideModalAC());
         }
-        //this.resetState()
-        dispatch(receivedWorkoutsDataAC());
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedWorkoutsDataAC());
+        
       })
   };
 };
 
 export const editWorkout = (id, name, duration, type) => {
   return dispatch => {
-    dispatch(requestingWorkoutsDataAC());
+    
     Axios({
       method: 'POST',
       withCredentials: true,
@@ -106,26 +123,25 @@ export const editWorkout = (id, name, duration, type) => {
     })
       .then(res => {
         if(res.data.success) {
-          /*const id = this.state.workoutToEdit._id;
-          this.setState({
-            modal: false,
-            workoutToEdit: null
-          });
-          this.resetState(id);*/
-          dispatch(editWorkoutAC());
+          const newWorkouts = [...res.data.workouts];
+          dispatch(editWorkoutAC(newWorkouts));
+          dispatch(hideModalAC());
+
+          const currentWorkout = newWorkouts.find(workout => workout._id === id);
+          dispatch(setWorkoutToViewAC(currentWorkout));
         }
-        dispatch(receivedWorkoutsDataAC());
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedWorkoutsDataAC());
+        
       })
   };
 };
 
 export const deleteWorkout = (id) => {
   return dispatch => {
-    dispatch(requestingWorkoutsDataAC());
+    
     Axios({
       method: 'DELETE',
       url: `${url}/workout/${id}`,
@@ -133,25 +149,22 @@ export const deleteWorkout = (id) => {
     })
       .then(res => {
         if(res.data.success) {
-          /*this.setState({
-            modal: false,
-            workoutToDelete: null
-          });
-          this.resetState();*/
-          dispatch(deleteWorkoutAC());
+          const newWorkouts = [...res.data.workouts];
+          dispatch(deleteWorkoutAC(newWorkouts));
+          dispatch(hideModalAC());
         }
-        dispatch(receivedWorkoutsDataAC());
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedWorkoutsDataAC());
+        
       })
   };
 };
 
 export const addToWorkout = (exercise, workoutId) => {
   return dispatch => {
-    dispatch(requestingWorkoutsDataAC());
+    
     Axios({
       method: 'POST',
       url: `${url}/add-to-workout/${workoutId}`,
@@ -159,24 +172,23 @@ export const addToWorkout = (exercise, workoutId) => {
       data: exercise
     })
       .then(res => {
-        /*this.setState({
-          modal: false,
-          workoutToAddTo: null
-        });
-        this.resetState();*/
-        dispatch(addToWorkoutAC());
-        dispatch(receivedWorkoutsDataAC());
+        if(res.data.success) {
+          const newWorkouts = [...res.data.workouts];
+          dispatch(addToWorkoutAC(newWorkouts));
+          dispatch(hideModalAC());
+        }
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedWorkoutsDataAC());
+        
       })
   };
 };
 
 export const editWorkoutExercise = (reps, sets, weight, workoutId, workoutExerciseId) => {
   return dispatch => {
-    dispatch(requestingWorkoutsDataAC());
+    
     Axios({
       method: 'POST',
       withCredentials: true,
@@ -189,26 +201,25 @@ export const editWorkoutExercise = (reps, sets, weight, workoutId, workoutExerci
     })
       .then(res => {
         if(res.data.success) {
-          /*const id = this.state.workoutExerciseToEdit.workoutId;
-          this.setState({
-            modal: false,
-            workoutExerciseToEdit: null
-          });
-          this.resetState(id);*/
-          dispatch(editWorkoutExerciseAC());
+          const newWorkouts = [...res.data.workouts];
+          dispatch(editWorkoutExerciseAC(newWorkouts));
+          dispatch(hideModalAC());
+
+          const currentWorkout = newWorkouts.find(workout => workout._id === workoutId);
+          dispatch(setWorkoutToViewAC(currentWorkout));
         }
-        dispatch(receivedWorkoutsDataAC());
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedWorkoutsDataAC());
+        
       })
   };
 };
 
 export const removeWorkoutExercise = (workoutId, workoutExerciseId) => {
   return dispatch => {
-    dispatch(requestingWorkoutsDataAC());
+    
     Axios({
       method: 'DELETE',
       url: `${url}/workout-exercise/${workoutExerciseId}/${workoutId}`,
@@ -216,14 +227,15 @@ export const removeWorkoutExercise = (workoutId, workoutExerciseId) => {
     })
       .then(res => {
         if(res.data.success) {
-          //this.resetState();
-          dispatch(removeWorkoutExerciseAC());
+          const newWorkouts = [...res.data.workouts];
+          dispatch(removeWorkoutExerciseAC(newWorkouts));
+          
         }
-        dispatch(receivedWorkoutsDataAC());
+        
       })
       .catch(e => {
         console.log(e);
-        dispatch(receivedWorkoutsDataAC());
+        
       })
   };
 };

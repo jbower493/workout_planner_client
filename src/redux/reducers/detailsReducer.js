@@ -1,4 +1,4 @@
-import { SET_DELETABLE_EXERCISE, SET_DELETABLE_WORKOUT, SET_WORKOUT_TO_ADD_TO, SET_WORKOUT_TO_EDIT, SET_WORKOUT_EXERCISE_TO_EDIT, SET_EXERCISE_TO_EDIT, SET_WORKOUT_TO_VIEW, RESET_WORKOUT_TO_VIEW, RESET_ALL_DETAILS, RESET_WORKOUT_DETAIL_DETAILS } from '../actions/types.js';
+import { SET_DELETABLE_EXERCISE, SET_DELETABLE_WORKOUT, SET_WORKOUT_TO_ADD_TO, SET_WORKOUT_TO_EDIT, SET_WORKOUT_EXERCISE_TO_EDIT, SET_EXERCISE_TO_EDIT, SET_WORKOUT_TO_VIEW, RESET_WORKOUT_TO_VIEW, RESET_ALL_DETAILS, RESET_WORKOUT_EXERCISE_TO_EDIT } from '../actions/types.js';
 // these initial state values need to be individually reset after their respective modals have been exited
 const initialState = {
   deletableExerciseId: null,
@@ -60,11 +60,10 @@ const detailsReducer = (state = initialState, action) => {
         workoutToAddTo: null,
         exerciseToEdit: null
       }
-    case RESET_WORKOUT_DETAIL_DETAILS:
+    case RESET_WORKOUT_EXERCISE_TO_EDIT:
       return {
         ...state,
-        workoutToEdit: null,
-        workoutExerciseToEdit: null,
+        workoutExerciseToEdit: null
       }
     default:
       return state;
