@@ -19,7 +19,7 @@ const AddToWorkout = (props) => {
       sets,
       weight 
     };
-    const workoutId = 'need to get workout id from somewhere!!';
+    const workoutId = props.workoutToAddTo;
     props.addToWorkout(exercise, workoutId);
   };
 
@@ -82,8 +82,8 @@ const AddToWorkout = (props) => {
 };
 
 const mapStateToProps = state => ({
-  loading: state.workouts.loading,
-  exercises: state.exercises.exercises
+  exercises: state.exercises.exercises,
+  workoutToAddTo: state.details.workoutToAddTo
 });
 
 export default connect(mapStateToProps, { addToWorkout, closeModal })(AddToWorkout);

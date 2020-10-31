@@ -1,3 +1,0 @@
-1 - Remove exercise buttons don't work
-
-2 - exercises not showing in add exercise to workout modal

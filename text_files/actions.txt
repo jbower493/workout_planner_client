@@ -1,0 +1,171 @@
+List of all actions
+
+format is as follows
+
+- action name
+component called from
+things it shold do
+works as expected (y/n)
+
+Auth:
+
+- show register
+Login
+
+n
+
+- show login
+Register
+
+n
+
+- get user
+App
+
+n
+
+- login
+Login
+
+n
+
+- register
+Register
+
+n
+
+- logout
+AppNavbar
+
+n
+
+Workouts:
+
+- get workouts
+Content
+
+n
+
+- new workout
+NewWorkoutModal
+
+n
+
+- edit workout
+EditWorkoutModal
+
+n
+
+- delete workout
+ConfirmDeleteModal
+
+n
+
+- add to workout
+AddToWorkout
+
+n
+
+- edit workout exercise
+EditWorkoutExerciseModal
+
+n
+
+- remove workout exercise
+WorkoutExercise
+
+n
+
+Exercises:
+
+- get exercises
+Content
+
+n
+
+- new exercise
+NewExerciseModal
+
+n
+
+- edit exercise
+EditExerciseModal
+
+n
+
+- delete exercise
+ConfirmDeleteModal
+
+n
+
+Display:
+
+- hide modal new
+NewWorkoutModal, NewExerciseModal
+
+n
+
+- show modal new
+AddButtons
+
+n
+
+- show delete modal
+Exercise, Workout
+
+n
+
+- show add to workout
+Workout
+
+n
+
+- show edit workout
+WorkoutDetails
+
+n
+
+- show edit workout exercise
+WorkoutDetails
+
+n
+
+- show edit exercise
+Exercise
+
+n
+
+- view workout
+Workout
+
+n
+
+- back to dashboard
+WorkoutEdtails
+
+n
+
+- display workouts
+AddButtons
+
+n
+
+- display exercises
+AddButtons
+
+n
+
+- close modal
+AddToWorkout, ConfirmDeleteModal, EditExerciseModal
+
+n
+
+- close edit workout modal
+EditWorkoutModal
+
+n
+
+- close edit workout exercise modal
+EditWorkoutExerciseModal
+
+n

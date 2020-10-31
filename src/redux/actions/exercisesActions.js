@@ -33,6 +33,7 @@ const deleteExerciseAC = (exercises) => {
   }
 };
 
+
 export const getExercises = () => {
   return (dispatch) => {
     

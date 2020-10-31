@@ -1,0 +1,1 @@
+finished most of redux stuff except the add exercise to workout method

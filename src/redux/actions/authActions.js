@@ -1,15 +1,7 @@
-import { GET_USER, LOGIN, REGISTER, LOGOUT, /*REQUESTING_AUTH_DATA, RECEIVED_AUTH_DATA,*/ SHOW_REGISTER, SHOW_LOGIN } from './types';
+import { GET_USER, LOGIN, REGISTER, LOGOUT, SHOW_REGISTER, SHOW_LOGIN } from './types';
 import Axios from 'axios';
 
 import { url } from '../../App';
-/*
-const requestingAuthDataAC = () => {
-  return { type: REQUESTING_AUTH_DATA }
-};
-
-const receivedAuthDataAC = () => {
-  return { type: RECEIVED_AUTH_DATA }
-};*/
 
 const showRegisterAC = () => {
   return { type: SHOW_REGISTER }
