@@ -1,4 +1,5 @@
 import React from 'react';
+import Alert from '../../Alert';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
@@ -37,8 +38,15 @@ class NewExerciseModal extends React.Component {
   }
 
   render() {
+    let _alert;
+    if(this.props._alert) {
+      _alert = <Alert color={this.props._alert.type} message={this.props._alert.message} />
+    } else {
+      _alert = null;
+    }
+
     let button;
-    if(this.props.loading) {
+    if(this.props.fetching) {
       button = <ModalFooter>
           <Spinner size="sm" color="secondary" />
         </ModalFooter>;
@@ -54,6 +62,7 @@ class NewExerciseModal extends React.Component {
         <Modal isOpen={true}>
           <ModalHeader>New exercise</ModalHeader>
           <ModalBody>
+            {_alert}
             <Form>
               <FormGroup className="mb-2">
                 <Label className="mb-0">Name</Label>
@@ -76,4 +85,8 @@ class NewExerciseModal extends React.Component {
   }
 };
 
-export default connect(null, { newExercise, closeModal })(NewExerciseModal);
+const mapStateToProps = (state) => ({
+  fetching: state.util.fetching
+});
+
+export default connect(mapStateToProps, { newExercise, closeModal })(NewExerciseModal);

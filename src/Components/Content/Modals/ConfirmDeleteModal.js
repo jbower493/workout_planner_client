@@ -23,7 +23,7 @@ const ConfirmDeleteModal = (props) => {
   }
 
   let button;
-  if(props.exercisesLoading || props.workoutsLoading) {
+  if(props.fetching) {
     button = <ModalFooter>
         <Spinner size="sm" color="secondary" />
       </ModalFooter>;
@@ -51,7 +51,8 @@ const mapStateToProps = state => ({
   exercisesLoading: state.exercises.loading,
   workoutsLoading: state.workouts.loading,
   deletableExerciseId: state.details.deletableExerciseId,
-  deletableWorkoutId: state.details.deletableWorkoutId
+  deletableWorkoutId: state.details.deletableWorkoutId,
+  fetching: state.util.fetching
 });
 
 export default connect(mapStateToProps, { deleteExercise, deleteWorkout, closeModal })(ConfirmDeleteModal);

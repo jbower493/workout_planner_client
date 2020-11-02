@@ -101,6 +101,7 @@ export const login = (credentials) => {
       .catch(e => {
         console.log(e);
         dispatch(loginAC(undefined));
+        dispatch(unsetFetchingAC());
         // show error page
       })
   }
@@ -131,6 +132,7 @@ export const register = (credentials) => {
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         // show error page
       })
   }
@@ -152,6 +154,7 @@ export const logout = () => {
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         // show error page
       })
   }

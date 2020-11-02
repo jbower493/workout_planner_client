@@ -1,4 +1,5 @@
 import React from 'react';
+import Alert from '../../Alert';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
@@ -37,6 +38,13 @@ class EditExerciseModal extends React.Component {
   }
 
   render() {
+    let _alert;
+    if(this.props._alert) {
+      _alert = <Alert color={this.props._alert.type} message={this.props._alert.message} />
+    } else {
+      _alert = null;
+    }
+
     let button;
     if(this.props.fetching) {
       button = <ModalFooter>
@@ -54,6 +62,7 @@ class EditExerciseModal extends React.Component {
         <Modal isOpen={true}>
           <ModalHeader>Edit Exercise</ModalHeader>
           <ModalBody>
+            {_alert}
             <Form>
               <FormGroup className="mb-2">
                 <Label className="mb-0">Name</Label>
@@ -77,7 +86,8 @@ class EditExerciseModal extends React.Component {
 };
 
 const mapStateToProps = state => ({
-  exercise: state.details.exerciseToEdit
+  exercise: state.details.exerciseToEdit,
+  fetching: state.util.fetching
 });
 
 export default connect(mapStateToProps, { editExercise, closeModal })(EditExerciseModal);

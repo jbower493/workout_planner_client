@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Alert from '../../Alert';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
@@ -23,6 +24,13 @@ const AddToWorkout = (props) => {
     props.addToWorkout(exercise, workoutId);
   };
 
+  let _alert;
+  if(props._alert) {
+    _alert = <Alert color={props._alert.type} message={props._alert.message} />
+  } else {
+    _alert = null;
+  }
+
   let button;
   if(props.fetching) {
     button = <ModalFooter>
@@ -40,6 +48,7 @@ const AddToWorkout = (props) => {
       <Modal isOpen={true}>
         <ModalHeader>Choose an exercise to add</ModalHeader>
         <ModalBody>
+          {_alert}
           <Form>
             <FormGroup className="list-to-add" tag="fieldset">
               {props.exercises.map(ex => {
@@ -83,7 +92,8 @@ const AddToWorkout = (props) => {
 
 const mapStateToProps = state => ({
   exercises: state.exercises.exercises,
-  workoutToAddTo: state.details.workoutToAddTo
+  workoutToAddTo: state.details.workoutToAddTo,
+  fetching: state.util.fetching
 });
 
 export default connect(mapStateToProps, { addToWorkout, closeModal })(AddToWorkout);

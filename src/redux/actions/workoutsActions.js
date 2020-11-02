@@ -2,6 +2,7 @@ import { GET_WORKOUTS, NEW_WORKOUT, EDIT_WORKOUT, DELETE_WORKOUT, ADD_TO_WORKOUT
 
 import { hideModalAC } from './displayActions';
 import { setWorkoutToViewAC } from './detailsActions';
+import { setFetchingAC, unsetFetchingAC, setAlertAC } from './utilActions';
 
 import Axios from 'axios';
 import { url } from '../../App.js';
@@ -75,14 +76,14 @@ export const getWorkouts = () => {
       .catch(e => {
         console.log(e);
         dispatch(getWorkoutsAC([]));
-        
+        // show error page
       })
   };
 };
 
 export const newWorkout = (name, duration, type) => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'POST',
       url: `${url}/new-workout`,
@@ -98,19 +99,26 @@ export const newWorkout = (name, duration, type) => {
           const newWorkouts = [...res.data.workouts];
           dispatch(newWorkoutAC(newWorkouts));
           dispatch(hideModalAC());
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
-        
+        dispatch(unsetFetchingAC());
+        // show error page
       })
   };
 };
 
 export const editWorkout = (id, name, duration, type) => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'POST',
       withCredentials: true,
@@ -129,11 +137,18 @@ export const editWorkout = (id, name, duration, type) => {
 
           const currentWorkout = newWorkouts.find(workout => workout._id === id);
           dispatch(setWorkoutToViewAC(currentWorkout));
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         
       })
   };
@@ -141,7 +156,7 @@ export const editWorkout = (id, name, duration, type) => {
 
 export const deleteWorkout = (id) => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'DELETE',
       url: `${url}/workout/${id}`,
@@ -153,10 +168,11 @@ export const deleteWorkout = (id) => {
           dispatch(deleteWorkoutAC(newWorkouts));
           dispatch(hideModalAC());
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         
       })
   };
@@ -164,7 +180,7 @@ export const deleteWorkout = (id) => {
 
 export const addToWorkout = (exercise, workoutId) => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'POST',
       url: `${url}/add-to-workout/${workoutId}`,
@@ -176,11 +192,18 @@ export const addToWorkout = (exercise, workoutId) => {
           const newWorkouts = [...res.data.workouts];
           dispatch(addToWorkoutAC(newWorkouts));
           dispatch(hideModalAC());
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         
       })
   };
@@ -188,7 +211,7 @@ export const addToWorkout = (exercise, workoutId) => {
 
 export const editWorkoutExercise = (reps, sets, weight, workoutId, workoutExerciseId) => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'POST',
       withCredentials: true,
@@ -207,17 +230,24 @@ export const editWorkoutExercise = (reps, sets, weight, workoutId, workoutExerci
 
           const currentWorkout = newWorkouts.find(workout => workout._id === workoutId);
           dispatch(setWorkoutToViewAC(currentWorkout));
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         
       })
   };
 };
 
-export const removeWorkoutExercise = (workoutId, workoutExerciseId) => {
+export const removeWorkoutExercise = (workoutId, workoutExerciseId, callback) => {
   return dispatch => {
     
     Axios({
@@ -226,6 +256,7 @@ export const removeWorkoutExercise = (workoutId, workoutExerciseId) => {
       withCredentials: true
     })
       .then(res => {
+        callback(false);
         if(res.data.success) {
           const newWorkouts = [...res.data.workouts];
           dispatch(removeWorkoutExerciseAC(newWorkouts));
@@ -235,6 +266,7 @@ export const removeWorkoutExercise = (workoutId, workoutExerciseId) => {
       })
       .catch(e => {
         console.log(e);
+        
         
       })
   };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Alert from '../../Alert';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
@@ -17,6 +18,13 @@ const EditWorkoutExerciseModal = (props) => {
     const workoutExerciseId = props.workoutExerciseToEdit._id;
     props.editWorkoutExercise(reps, sets, weight, workoutId, workoutExerciseId);
   };
+
+  let _alert;
+  if(props._alert) {
+    _alert = <Alert color={props._alert.type} message={props._alert.message} />
+  } else {
+    _alert = null;
+  }
 
   let button;
   if(props.fetching) {
@@ -38,6 +46,7 @@ const EditWorkoutExerciseModal = (props) => {
           <span className="text-primary">{props.workoutExerciseToEdit.exercise.name}</span>
         </ModalHeader>
         <ModalBody>
+          {_alert}
           <Form>
             <FormGroup className="mb-2">
               <Label className="mb-0">Reps</Label>
@@ -60,7 +69,8 @@ const EditWorkoutExerciseModal = (props) => {
 };
 
 const mapStateToProps = state => ({
-  workoutExerciseToEdit: state.details.workoutExerciseToEdit
+  workoutExerciseToEdit: state.details.workoutExerciseToEdit,
+  fetching: state.util.fetching
 });
 
 export default connect(mapStateToProps, { editWorkoutExercise, closeEditWorkoutExerciseModal })(EditWorkoutExerciseModal);

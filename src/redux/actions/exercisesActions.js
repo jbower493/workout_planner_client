@@ -4,6 +4,7 @@ import Axios from 'axios';
 import { url } from '../../App';
 
 import { hideModalAC } from './displayActions.js';
+import { setFetchingAC, unsetFetchingAC, setAlertAC } from './utilActions';
 
 const getExercisesAC = (exercises) => {
   return {
@@ -60,7 +61,7 @@ export const getExercises = () => {
 
 export const newExercise = (name, description, muscleGroup) => {
   return (dispatch) => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'POST',
       url: `${url}/new-exercise`,
@@ -77,11 +78,18 @@ export const newExercise = (name, description, muscleGroup) => {
           const newExercises = [...res.data.exercises];
           dispatch(newExerciseAC(newExercises));
           dispatch(hideModalAC())
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         
       })
   };
@@ -89,7 +97,7 @@ export const newExercise = (name, description, muscleGroup) => {
 
 export const editExercise = (id, name, description, muscleGroup) => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'POST',
       url: `${url}/edit-exercise/${id}`,
@@ -105,11 +113,18 @@ export const editExercise = (id, name, description, muscleGroup) => {
           const newExercises = [...res.data.exercises];
           dispatch(editExerciseAC(newExercises));
           dispatch(hideModalAC())
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         
       })
   };
@@ -117,7 +132,7 @@ export const editExercise = (id, name, description, muscleGroup) => {
 
 export const deleteExercise = (id) => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'DELETE',
       url: `${url}/exercise/${id}`,
@@ -129,10 +144,11 @@ export const deleteExercise = (id) => {
           dispatch(deleteExerciseAC(newExercises));
           dispatch(hideModalAC())
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
+        dispatch(unsetFetchingAC());
         
       })
   };

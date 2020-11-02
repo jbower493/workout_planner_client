@@ -1,4 +1,4 @@
-import React/*, { useState }*/ from 'react';
+import React, { useState } from 'react';
 
 import { ListGroupItem, Button, Spinner } from 'reactstrap';
 
@@ -6,16 +6,17 @@ import { connect } from 'react-redux';
 import { removeWorkoutExercise } from '../../../redux/actions/workoutsActions.js';
 
 const WorkoutExercise = (props) => {
-  //const [removing, setRemoving] = useState(false);
+  const [removing, setRemoving] = useState(false);
 
   const removeWorkoutExercise = (e) => {
     const workoutId = props.workoutId;
     const workoutExerciseId = props.exercise._id;
-    props.removeWorkoutExercise(workoutId, workoutExerciseId);
+    setRemoving(true);
+    props.removeWorkoutExercise(workoutId, workoutExerciseId, setRemoving);
   };
 
   let button;
-  if(props.fetching) {
+  if(removing) {
     button = <Spinner size="sm" color="secondary" />
   } else {
     button = <Button color="danger" onClick={removeWorkoutExercise}>Remove</Button>;
@@ -30,7 +31,7 @@ const WorkoutExercise = (props) => {
 };
 
 const mapStateToProps = state => ({
-  loading: state.workouts.loading
+  fetching: state.util.fetching
 });
 
 export default connect(mapStateToProps, { removeWorkoutExercise })(WorkoutExercise);
