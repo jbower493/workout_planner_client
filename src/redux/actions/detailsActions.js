@@ -35,10 +35,10 @@ export const setWorkoutExerciseToEditAC = (workoutExercise) => {
   }
 };
 
-export const setExerciseToEditAC = (exerciseId) => {
+export const setExerciseToEditAC = (exercise) => {
   return {
     type: SET_EXERCISE_TO_EDIT,
-    payload: exerciseId
+    payload: exercise
   }
 };
 

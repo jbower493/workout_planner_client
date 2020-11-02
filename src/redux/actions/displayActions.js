@@ -94,9 +94,9 @@ export const showEditWorkoutExercise = (workoutExercise) => {
   };
 };
 
-export const showEditExercise = (exerciseId) => {
+export const showEditExercise = (exercise) => {
   return dispatch => {
-    dispatch(setExerciseToEditAC(exerciseId));
+    dispatch(setExerciseToEditAC(exercise));
     dispatch(showEditExerciseAC());
   };
 };

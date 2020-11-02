@@ -48,9 +48,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  loading: state.auth.loading
+  loading: state.util.loading
 });
-
-//const mapDispatchToProps = { getUser };
 
 export default connect(mapStateToProps, { getUser })(App);

@@ -16,7 +16,7 @@ const Exercise = (props) => {
   const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
   const showEditExercise = () => {
-    props.showEditExercise(props.exercise._id);
+    props.showEditExercise(props.exercise);
   };
 
   const showDeleteModal = e => {

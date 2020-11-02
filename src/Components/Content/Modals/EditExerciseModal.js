@@ -77,7 +77,7 @@ class EditExerciseModal extends React.Component {
 };
 
 const mapStateToProps = state => ({
-  loading: state.exercises.loading
+  exercise: state.details.exerciseToEdit
 });
 
 export default connect(mapStateToProps, { editExercise, closeModal })(EditExerciseModal);

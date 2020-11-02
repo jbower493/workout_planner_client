@@ -18,7 +18,7 @@ import {
 const AppNavbar = (props) => {
   
   let button;
-  if(!props.loading) {
+  if(!props.fetching) {
     button = <NavLink className="logout-button d-flex align-items-center" onClick={props.logout} >Logout<MdPerson className="ml-1" /></NavLink>;
   } else {
     button = <Spinner size="sm" color="light" />
@@ -42,7 +42,7 @@ const AppNavbar = (props) => {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    //loading: state.auth.loading
+    fetching: state.util.fetching
   }
 };
 

@@ -1,6 +1,8 @@
 import { GET_USER, LOGIN, REGISTER, LOGOUT, SHOW_REGISTER, SHOW_LOGIN } from './types';
 import Axios from 'axios';
 
+import { unsetLoadingAC, setFetchingAC, unsetFetchingAC, setAlertAC, clearAlertAC } from './utilActions';
+
 import { url } from '../../App';
 
 const showRegisterAC = () => {
@@ -40,11 +42,13 @@ const logoutAC = () => {
 export const showRegister = () => {
   return (dispatch) => {
     dispatch(showRegisterAC());
+    dispatch(clearAlertAC());
   }
 };
 
 export const showLogin = () => {
   return (dispatch) => {
+    dispatch(clearAlertAC());
     dispatch(showLoginAC());
   }
 };
@@ -61,19 +65,20 @@ export const getUser = () => {
         if(res.data.success) {
           dispatch(getUserAC(res.data.user));
         }
-        
+        dispatch(unsetLoadingAC());
       })
       .catch(e => {
         console.log(e);
         dispatch(getUserAC(undefined));
-        
+        dispatch(unsetLoadingAC());
       })
   };
 };
 
 export const login = (credentials) => {
   return dispatch => {
-    
+    dispatch(clearAlertAC());
+    dispatch(setFetchingAC());
     Axios({
       method: 'post',
       url: `${url}/login`,
@@ -84,20 +89,27 @@ export const login = (credentials) => {
       .then(res => {
         if(res.data.success) {
           dispatch(loginAC(res.data.user));
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
         dispatch(loginAC(undefined));
-        
+        // show error page
       })
   }
 };
 
 export const register = (credentials) => {
   return dispatch => {
-    
+    dispatch(clearAlertAC());
+    dispatch(setFetchingAC());
     Axios({
       method: 'post',
       url: `${url}/register`,
@@ -108,19 +120,25 @@ export const register = (credentials) => {
       .then(res => {
         if(res.data.success) {
           dispatch(registerAC());
+        } else {
+          const _alert = {
+            type: 'warning',
+            message: res.data.error
+          };
+          dispatch(setAlertAC(_alert));
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
-        
+        // show error page
       })
   }
 };
 
 export const logout = () => {
   return dispatch => {
-    
+    dispatch(setFetchingAC());
     Axios({
       method: 'GET',
       withCredentials: true,
@@ -130,11 +148,11 @@ export const logout = () => {
         if(res.data.success) {
           dispatch(logoutAC());
         }
-        
+        dispatch(unsetFetchingAC());
       })
       .catch(e => {
         console.log(e);
-        
+        // show error page
       })
   }
 };

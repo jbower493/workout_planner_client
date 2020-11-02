@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Alert from '../Alert';
 
 import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
@@ -13,8 +14,15 @@ const Login = (props) => {
     props.login({ username, password });
   };
 
+  let _alert;
+  if(props._alert) {
+    _alert = <Alert color={props._alert.type} message={props._alert.message} />
+  } else {
+    _alert = null;
+  }
+
   let button;
-  if(props.loading) {
+  if(props.fetching) {
     button = <Spinner size="sm" color="secondary" />
   } else {
     button = <Button color="primary" className="auth-button" onClick={login} >Login</Button>
@@ -23,6 +31,7 @@ const Login = (props) => {
   if(props.form === 'login') {
     return (
       <Form>
+        {_alert}
         <h2>Login</h2>
         <FormGroup>
           <Label>Username</Label>
@@ -44,9 +53,8 @@ const Login = (props) => {
 const mapStateToProps = state => ({
   user: state.auth.user,
   form: state.auth.form,
-  loading: state.auth.loading
+  fetching: state.util.fetching,
+  _alert: state.util._alert
 });
-
-//const mapDispatchToProps = { login };
 
 export default connect(mapStateToProps, { login, showRegister })(Login);
