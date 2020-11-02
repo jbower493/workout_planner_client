@@ -1,4 +1,8 @@
-import { UNSET_LOADING, SET_FETCHING, UNSET_FETCHING, SET_ALERT, CLEAR_ALERT } from './types';
+import { SET_LOADING, UNSET_LOADING, SET_FETCHING, UNSET_FETCHING, SET_ALERT, CLEAR_ALERT } from './types';
+
+export const setLoadingAC = () => {
+  return { type: SET_LOADING }
+};
 
 export const unsetLoadingAC = () => {
   return { type: UNSET_LOADING }

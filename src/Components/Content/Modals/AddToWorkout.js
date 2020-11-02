@@ -15,11 +15,14 @@ const AddToWorkout = (props) => {
 
   const addToWorkout = (e) => {
     const exercise = {
-      exercise: exerciseToAdd,
+      //exercise: exerciseToAdd,
       reps,
       sets,
       weight 
     };
+    if(exerciseToAdd !== '') {
+      exercise.exercise = exerciseToAdd
+    }
     const workoutId = props.workoutToAddTo;
     props.addToWorkout(exercise, workoutId);
   };
@@ -93,7 +96,8 @@ const AddToWorkout = (props) => {
 const mapStateToProps = state => ({
   exercises: state.exercises.exercises,
   workoutToAddTo: state.details.workoutToAddTo,
-  fetching: state.util.fetching
+  fetching: state.util.fetching,
+  _alert: state.util._alert
 });
 
 export default connect(mapStateToProps, { addToWorkout, closeModal })(AddToWorkout);

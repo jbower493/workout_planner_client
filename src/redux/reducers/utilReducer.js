@@ -1,4 +1,4 @@
-import { UNSET_LOADING, SET_FETCHING, UNSET_FETCHING, SET_ALERT, CLEAR_ALERT } from '../actions/types';
+import { SET_LOADING, UNSET_LOADING, SET_FETCHING, UNSET_FETCHING, SET_ALERT, CLEAR_ALERT } from '../actions/types';
 
 const initialState = {
   loading: true,
@@ -8,6 +8,11 @@ const initialState = {
 
 const utilReducer = (state = initialState, action) => {
   switch(action.type) {
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
     case UNSET_LOADING:
       return {
         ...state,

@@ -86,7 +86,8 @@ class NewExerciseModal extends React.Component {
 };
 
 const mapStateToProps = (state) => ({
-  fetching: state.util.fetching
+  fetching: state.util.fetching,
+  _alert: state.util._alert
 });
 
 export default connect(mapStateToProps, { newExercise, closeModal })(NewExerciseModal);

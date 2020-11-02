@@ -70,7 +70,7 @@ class NewWorkoutModal extends React.Component {
               </FormGroup>
               <FormGroup className="mb-2">
                 <Label className="mb-0">Duration</Label>
-                <Input type="text" placeholder="Duration" onChange={this.setDuration} />
+                <Input type="number" placeholder="Duration" onChange={this.setDuration} />
               </FormGroup>
               <FormGroup className="mb-2">
                 <Label className="mb-0">Type</Label>
@@ -92,7 +92,8 @@ class NewWorkoutModal extends React.Component {
 };
 
 const mapStateToProps = state => ({
-  fetching: state.util.fetching
+  fetching: state.util.fetching,
+  _alert: state.util._alert
 });
 
 export default connect(mapStateToProps, { newWorkout, closeModal })(NewWorkoutModal);

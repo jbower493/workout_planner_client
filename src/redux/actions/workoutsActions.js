@@ -2,7 +2,7 @@ import { GET_WORKOUTS, NEW_WORKOUT, EDIT_WORKOUT, DELETE_WORKOUT, ADD_TO_WORKOUT
 
 import { hideModalAC } from './displayActions';
 import { setWorkoutToViewAC } from './detailsActions';
-import { setFetchingAC, unsetFetchingAC, setAlertAC } from './utilActions';
+import { setFetchingAC, unsetFetchingAC, setAlertAC, clearAlertAC } from './utilActions';
 
 import Axios from 'axios';
 import { url } from '../../App.js';
@@ -83,6 +83,7 @@ export const getWorkouts = () => {
 
 export const newWorkout = (name, duration, type) => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(setFetchingAC());
     Axios({
       method: 'POST',
@@ -118,6 +119,7 @@ export const newWorkout = (name, duration, type) => {
 
 export const editWorkout = (id, name, duration, type) => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(setFetchingAC());
     Axios({
       method: 'POST',
@@ -180,6 +182,7 @@ export const deleteWorkout = (id) => {
 
 export const addToWorkout = (exercise, workoutId) => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(setFetchingAC());
     Axios({
       method: 'POST',
@@ -211,6 +214,7 @@ export const addToWorkout = (exercise, workoutId) => {
 
 export const editWorkoutExercise = (reps, sets, weight, workoutId, workoutExerciseId) => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(setFetchingAC());
     Axios({
       method: 'POST',

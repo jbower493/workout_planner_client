@@ -12,11 +12,20 @@ const EditWorkoutExerciseModal = (props) => {
   const [sets, setSets] = useState(props.workoutExerciseToEdit.sets);
   const [weight, setWeight] = useState(props.workoutExerciseToEdit.weight);
 
+  // nuberifying function to cover up that for some reason the numbers are being sent as strings
+  const numberify = (num) => {
+    if(typeof num === 'string') {
+      return Number(num);
+    } else {
+      return num;
+    }
+  };
+
   const editWorkoutExercise = e => {
     // need to get last 2 arguments from somewhere!!
     const workoutId = props.workoutExerciseToEdit.workoutId;
     const workoutExerciseId = props.workoutExerciseToEdit._id;
-    props.editWorkoutExercise(reps, sets, weight, workoutId, workoutExerciseId);
+    props.editWorkoutExercise(numberify(reps), numberify(sets), weight, workoutId, workoutExerciseId);
   };
 
   let _alert;
@@ -70,7 +79,8 @@ const EditWorkoutExerciseModal = (props) => {
 
 const mapStateToProps = state => ({
   workoutExerciseToEdit: state.details.workoutExerciseToEdit,
-  fetching: state.util.fetching
+  fetching: state.util.fetching,
+  _alert: state.util._alert
 });
 
 export default connect(mapStateToProps, { editWorkoutExercise, closeEditWorkoutExerciseModal })(EditWorkoutExerciseModal);

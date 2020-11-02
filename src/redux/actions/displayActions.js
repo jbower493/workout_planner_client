@@ -1,6 +1,7 @@
 import { HIDE_MODAL, SHOW_MODAL_NEW, SHOW_DELETE_MODAL, SHOW_ADD_TO_WORKOUT, SHOW_EDIT_WORKOUT, SHOW_EDIT_WORKOUT_EXERCISE, SHOW_EDIT_EXERCISE, VIEW_WORKOUT, BACK_TO_DASHBOARD, DISPLAY_EXERCISES, DISPLAY_WORKOUTS } from './types';
 
 import { setDeletableExerciseAC, setDeletableWorkoutAC, setWorkoutToAddToAC, setWorkoutToEditAC, setWorkoutExerciseToEditAC, setExerciseToEditAC, setWorkoutToViewAC, resetWorkoutToViewAC, resetAllDetailsAC, resetWorkoutExerciseToEditAC } from './detailsActions.js';
+import { clearAlertAC } from './utilActions';
 
 export const hideModalAC = () => {
   return { type: HIDE_MODAL }
@@ -52,6 +53,7 @@ const displayExercisesAC = () => {
 
 export const hideModalNew = () => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(hideModalAC());
   };
 };
@@ -129,6 +131,7 @@ export const displayExercises = () => {
 
 export const closeModal = () => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(hideModalAC());
     dispatch(resetAllDetailsAC());
   };
@@ -136,6 +139,7 @@ export const closeModal = () => {
 
 export const closeEditWorkoutModal = () => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(hideModalAC());
     
   };
@@ -143,6 +147,7 @@ export const closeEditWorkoutModal = () => {
 
 export const closeEditWorkoutExerciseModal = () => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(hideModalAC());
     dispatch(resetWorkoutExerciseToEditAC());
   }

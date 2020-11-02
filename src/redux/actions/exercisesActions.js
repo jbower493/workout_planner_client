@@ -4,7 +4,7 @@ import Axios from 'axios';
 import { url } from '../../App';
 
 import { hideModalAC } from './displayActions.js';
-import { setFetchingAC, unsetFetchingAC, setAlertAC } from './utilActions';
+import { setFetchingAC, unsetFetchingAC, setAlertAC, clearAlertAC } from './utilActions';
 
 const getExercisesAC = (exercises) => {
   return {
@@ -61,6 +61,7 @@ export const getExercises = () => {
 
 export const newExercise = (name, description, muscleGroup) => {
   return (dispatch) => {
+    dispatch(clearAlertAC());
     dispatch(setFetchingAC());
     Axios({
       method: 'POST',
@@ -97,6 +98,7 @@ export const newExercise = (name, description, muscleGroup) => {
 
 export const editExercise = (id, name, description, muscleGroup) => {
   return dispatch => {
+    dispatch(clearAlertAC());
     dispatch(setFetchingAC());
     Axios({
       method: 'POST',

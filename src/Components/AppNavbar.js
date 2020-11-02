@@ -18,7 +18,7 @@ import {
 const AppNavbar = (props) => {
   
   let button;
-  if(!props.fetching) {
+  if(true) {
     button = <NavLink className="logout-button d-flex align-items-center" onClick={props.logout} >Logout<MdPerson className="ml-1" /></NavLink>;
   } else {
     button = <Spinner size="sm" color="light" />

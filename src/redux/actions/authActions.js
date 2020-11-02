@@ -1,7 +1,7 @@
 import { GET_USER, LOGIN, REGISTER, LOGOUT, SHOW_REGISTER, SHOW_LOGIN } from './types';
 import Axios from 'axios';
 
-import { unsetLoadingAC, setFetchingAC, unsetFetchingAC, setAlertAC, clearAlertAC } from './utilActions';
+import { setLoadingAC, unsetLoadingAC, setFetchingAC, unsetFetchingAC, setAlertAC, clearAlertAC } from './utilActions';
 
 import { url } from '../../App';
 
@@ -140,7 +140,7 @@ export const register = (credentials) => {
 
 export const logout = () => {
   return dispatch => {
-    dispatch(setFetchingAC());
+    dispatch(setLoadingAC());
     Axios({
       method: 'GET',
       withCredentials: true,
@@ -150,11 +150,11 @@ export const logout = () => {
         if(res.data.success) {
           dispatch(logoutAC());
         }
-        dispatch(unsetFetchingAC());
+        dispatch(unsetLoadingAC());
       })
       .catch(e => {
         console.log(e);
-        dispatch(unsetFetchingAC());
+        dispatch(unsetLoadingAC());
         // show error page
       })
   }

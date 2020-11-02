@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
+import React/*, { useEffect }*/ from 'react';
 import { Alert } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { clearAlert } from '../redux/actions/utilActions';
 
 const AlertExample = (props) => {
-  const { clearAlert } = props;
+  /*const { clearAlert } = props;
   useEffect(() => {
     setTimeout(() => {
       clearAlert();
     }, 5000);
-  }, [clearAlert]);
+  }, [clearAlert]);*/
 
-  const onDismiss = () => clearAlert();
+  const onDismiss = () => props.clearAlert();
 
   return (
     <Alert color={props.color} isOpen={true} toggle={onDismiss}>

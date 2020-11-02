@@ -49,7 +49,7 @@ const EditWorkoutModal = (props) => {
             </FormGroup>
             <FormGroup className="mb-2">
               <Label className="mb-0">Duration</Label>
-              <Input type="text" value={duration} onChange={e => setDuration(e.target.value)} />
+              <Input type="number" value={duration} onChange={e => setDuration(e.target.value)} />
             </FormGroup>
             <FormGroup className="mb-2">
               <Label className="mb-0">Type</Label>
@@ -71,7 +71,8 @@ const EditWorkoutModal = (props) => {
 
 const mapStateToProps = state => ({
   workoutToEdit: state.details.workoutToEdit,
-  fetching: state.util.fetching
+  fetching: state.util.fetching,
+  _alert: state.util._alert
 });
 
 export default connect(mapStateToProps, { editWorkout, closeEditWorkoutModal })(EditWorkoutModal);
