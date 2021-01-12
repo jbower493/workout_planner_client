@@ -13,7 +13,7 @@ import { getUser } from './redux/actions/authActions';
 
 
 export const url = 'http://localhost:4500';
-//export const url = 'https://jbwebsites.work/api';
+//export const url = 'https://jbwebsites.work/workout-planner/api';
 
 
 class App extends React.Component {
